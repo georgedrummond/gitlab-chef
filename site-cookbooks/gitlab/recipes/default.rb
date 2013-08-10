@@ -1,3 +1,5 @@
+include_recipe 'postgresql'
+
 # Install required apt packages
 
 %w{ build-essential zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev 
