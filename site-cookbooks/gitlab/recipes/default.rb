@@ -19,16 +19,16 @@ directory '/tmp/ruby' do
   action :create
 end
 
-remote_file '/tmp/ruby/ruby-2.0.0-p247.tar.gz' do
-  source 'http://ftp.ruby-lang.org/pub/ruby/2.0/ruby-2.0.0-p247.tar.gz'
+remote_file '/tmp/ruby/ruby-1.9.3-p392.tar.gz' do
+  source 'http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p392.tar.gz'
   action :create_if_missing
 end
 
 bash 'compile_ruby_from_source' do
   cwd '/tmp/ruby'
   code <<-RUN
-    tar zxf ruby-2.0.0-p247.tar.gz
-    cd ruby-2.0.0-p247
+    tar zxf ruby-1.9.3-p392.tar.gz
+    cd ruby-1.9.3-p392
     ./configure
     make
     make install
@@ -66,24 +66,26 @@ end
 
 git '/home/git/gitlab-shell' do
   repository 'git://github.com/gitlabhq/gitlab-shell.git'
-  revision 'v1.7.0'
+  revision 'v1.5.0'
   user 'git'
 end
 
 template '/home/git/gitlab-shell/config.yml' do
   source 'gitlab-shell.config.yml'
+  owner 'git'
 end
 
 bash 'run_gitlab_shell_install' do
   cwd '/home/git/gitlab-shell'
   code './bin/install'
+  user 'git'
 end
 
 # GitLab
 
 git '/home/git/gitlab' do
   repository 'git://github.com/gitlabhq/gitlabhq.git'
-  revision '5-3-stable'
+  revision '5-4-stable'
   user 'git'
 end 
 
@@ -127,7 +129,6 @@ bash 'configure_git_user' do
   command <<-RUN
     git config --global user.name "GitLab"
     git config --global user.email "gitlab@localhost"
-    git config --global core.autocrlf input
   RUN
 end
 

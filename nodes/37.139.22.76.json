@@ -1,6 +1,7 @@
 {"run_list":[
   "recipe[apt]",
   "recipe[nginx]",
-  "recipe[postgresql]",
+  "recipe[postgresql::client]",
+  "recipe[postgresql::server_dev]",
   "recipe[gitlab]"
 ]}
