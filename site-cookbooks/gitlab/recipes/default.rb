@@ -1,4 +1,5 @@
-include_recipe 'postgresql'
+include_recipe 'postgresql::pg_user'
+include_recipe 'postgresql::pg_database'
 
 # Install required apt packages
 
@@ -50,6 +51,17 @@ user 'git' do
   supports manage_home: true
 end
 
+# Create databases
+
+pg_user 'git' do
+  privileges superuser: false, createdb: false, login: true
+  password 'password'
+end
+
+pg_database 'gitlabhq_production' do
+  owner 'git'
+end
+
 # GitLab shell
 
 git '/home/git/gitlab-shell' do
@@ -75,15 +87,12 @@ git '/home/git/gitlab' do
   user 'git'
 end 
 
-template '/home/git/gitlab/config.yml' do
-  source 'gitlab.config.yml'
-end
-
 %w{ log tmp tmp/pid tmp/sockets public/uploads }.each do |dir|
   directory "/home/git/gitlab/#{dir}" do
     mode 00755
     recursive true
     action :create
+    owner 'git'
   end
 end
 
@@ -94,6 +103,23 @@ end
 
 template '/home/git/gitlab/config/unicorn.rb' do
   source 'gitlab.unicorn.rb'
+  owner 'git'
+end
+
+template '/home/git/gitlab/config/gitlab.yml' do
+  source 'gitlab.gitlab.yml'
+  owner 'git'
+end
+
+template '/home/git/gitlab/config/puma.rb' do
+  source 'gitlab.puma.rb'
+  mode 00755
+  owner 'git'
+end
+
+template '/home/git/gitlab/config/resque.yml' do
+  source 'gitlab.resque.yml'
+  owner 'git'
 end
 
 bash 'configure_git_user' do
@@ -112,22 +138,47 @@ end
 execute 'bundle_gitlab' do
   user 'git'
   cwd '/home/git/gitlab'
-  command 'bundle install --deployment --without development test postgres mysql unicorn aws'
+  command 'bundle install --deployment --without development test mysql unicorn aws'
 end
 
-# Setup postgresql
+# Run GitLab setup
 
-%w{ postgresql-9.1 libpq-dev }.each do |pkg|
-  package pkg
+template '/home/git/gitlab/config/database.yml' do
+  source 'gitlab.database.yml'
+  user 'git'
 end
-
-# Create db user
-
-
 
 execute 'create_gitlab_database' do
   user 'git'
+  cwd '/home/git/gitlab'
   command 'bundle exec rake gitlab:setup RAILS_ENV=production force=yes && touch .gitlab-setup'
 end
 
+# Setup GitLab daemon
 
+file '/home/git/gitlab/lib/support/init.d/gitlab' do
+  mode 00755
+end
+
+link '/etc/init.d/gitlab' do
+  to '/home/git/gitlab/lib/support/init.d/gitlab'
+end
+
+service 'gitlab' do
+  action [:enable, :start]
+end
+
+# sudo cp lib/support/nginx/gitlab /etc/nginx/sites-available/gitlab
+# sudo ln -s /etc/nginx/sites-available/gitlab /etc/nginx/sites-enabled/gitlab
+
+template '/etc/nginx/sites-available/gitlab' do
+  source 'gitlab.nginx.conf'
+end
+
+link '/etc/nginx/sites-enabled/gitlab' do
+  to '/etc/nginx/sites-available/gitlab'
+end
+
+service 'nginx' do
+  action :restart
+end
