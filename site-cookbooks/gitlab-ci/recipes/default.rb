@@ -14,12 +14,12 @@ end
 
 pg_user 'gitlab_ci' do
   privileges superuser: false, createdb: false, login: true
-  template 'template0'
   password 'password'
 end
 
 pg_database 'gitlab_ci_production' do
   owner 'gitlab_ci'
+  template 'template0'
 end
 
 # GitLab CI
@@ -59,7 +59,7 @@ end
 execute 'bundle_gitlab_ci' do
   user 'gitlab_ci'
   cwd '/home/gitlab_ci/gitlab-ci'
-  command 'bundle install --deployment --without development test mysql unicorn aws'
+  command 'bundle install --without development test mysql --deployment'
 end
 
 # Setup the database

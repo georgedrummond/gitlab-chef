@@ -19,6 +19,7 @@ end
 
 pg_database 'gitlabhq_production' do
   owner 'git'
+  template 'template0'
 end
 
 # GitLab shell
