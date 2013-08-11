@@ -4,5 +4,7 @@
   "recipe[postgresql::client]",
   "recipe[postgresql::server]",
   "recipe[postgresql::server_dev]",
+  "recipe[ruby]",
+  "recipe[gitlab-ci]",
   "recipe[gitlab]"
 ]}
