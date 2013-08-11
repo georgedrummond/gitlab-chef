@@ -70,6 +70,17 @@ execute 'create_gitlab_ci_database' do
   command 'bundle exec rake db:setup RAILS_ENV=production'
 end
 
+# Nginx config
+
+template '/etc/nginx/sites-available/gitlab_ci' do
+  source 'gitlab-ci.nginx.conf'
+end
+
+link '/etc/nginx/sites-enabled/gitlab_ci' do
+  to '/etc/nginx/sites-available/gitlab_ci'
+  #notifies :restart, "service[gitlab]", :delayed
+end
+
 # init.d
 
 file '/home/gitlab_ci/gitlab-ci/lib/support/init.d/gitlab_ci' do
