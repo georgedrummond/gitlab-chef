@@ -1,1 +1,1 @@
-Ubuntu 10.4
+Ubuntu 10.4 x64

@@ -14,6 +14,7 @@ end
 
 pg_user 'gitlab_ci' do
   privileges superuser: false, createdb: false, login: true
+  template 'template0'
   password 'password'
 end
 
