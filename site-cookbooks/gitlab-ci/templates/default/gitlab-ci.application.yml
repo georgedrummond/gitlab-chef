@@ -1,6 +1,6 @@
 defaults: &defaults
   allowed_gitlab_urls: 
-    - 'http://http://37.139.22.76:9292/'
+    - 'http://code.gemjarhq.com/'
 
 development:
   <<: *defaults

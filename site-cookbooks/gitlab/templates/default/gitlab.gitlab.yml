@@ -15,7 +15,7 @@ production: &base
   ## GitLab settings
   gitlab:
     ## Web server settings
-    host: 37.139.22.76
+    host: code.gemjarhq.com
     port: 80
     https: false
     # WARNING: This feature is no longer supported
@@ -28,10 +28,10 @@ production: &base
 
     ## Email settings
     # Email address used in the "From" field in mails sent by GitLab
-    email_from: gitlab@localhost
+    email_from: gitlab@gemjarhq.com
 
     # Email address of your support contact (default: same as email_from)
-    support_email: support@localhost
+    support_email: support@gemjarhq.com
 
     ## User settings
     default_projects_limit: 10
