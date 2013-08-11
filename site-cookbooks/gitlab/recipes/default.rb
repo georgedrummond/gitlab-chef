@@ -115,7 +115,6 @@ end
 
 template '/home/git/gitlab/config/puma.rb' do
   source 'gitlab.puma.rb'
-  mode 00755
   owner 'git'
 end
 
@@ -169,8 +168,7 @@ service 'gitlab' do
   action [:enable, :start]
 end
 
-# sudo cp lib/support/nginx/gitlab /etc/nginx/sites-available/gitlab
-# sudo ln -s /etc/nginx/sites-available/gitlab /etc/nginx/sites-enabled/gitlab
+# Nginx site
 
 template '/etc/nginx/sites-available/gitlab' do
   source 'gitlab.nginx.conf'
@@ -178,8 +176,12 @@ end
 
 link '/etc/nginx/sites-enabled/gitlab' do
   to '/etc/nginx/sites-available/gitlab'
+  #notifies :restart, "service[gitlab]", :delayed
 end
 
-service 'nginx' do
-  action :restart
+include_recipe "nginx"
+
+nginx_site 'gitlab' do
+  enable true
 end
+

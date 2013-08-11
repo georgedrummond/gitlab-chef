@@ -61,8 +61,7 @@ stdout_redirect "#{application_path}/log/puma.stdout.log", "#{application_path}/
 # accepted protocols.
 #
 # The default is “tcp://0.0.0.0:9292”.
-#
-# bind 'tcp://0.0.0.0:9292'
+bind 'tcp://0.0.0.0:9292'
 bind "unix://#{application_path}/tmp/sockets/gitlab.socket"
 
 # Instead of “bind 'ssl://127.0.0.1:9292?key=path_to_key&cert=path_to_cert'” you

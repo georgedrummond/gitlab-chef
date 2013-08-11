@@ -2,6 +2,7 @@
   "recipe[apt]",
   "recipe[nginx]",
   "recipe[postgresql::client]",
+  "recipe[postgresql::server]",
   "recipe[postgresql::server_dev]",
   "recipe[gitlab]"
 ]}

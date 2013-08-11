@@ -5,6 +5,6 @@ production:
   pool: 10
   username: git
   password: password
-  # host: localhost
+  host: localhost
   # port: 5432 
   # socket: /tmp/postgresql.sock

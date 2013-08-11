@@ -15,7 +15,7 @@ production: &base
   ## GitLab settings
   gitlab:
     ## Web server settings
-    host: localhost
+    host: 37.139.22.76
     port: 80
     https: false
     # WARNING: This feature is no longer supported
