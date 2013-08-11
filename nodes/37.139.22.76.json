@@ -1,10 +1,9 @@
 {"run_list":[
   "recipe[system-update]",
-  "recipe[nginx::source]",
   "recipe[postgresql::server]",
-  "recipe[postgresql::client]",
   "recipe[postgresql::server_dev]",
+  "recipe[postgresql::client]",
   "recipe[ruby]",
-  "recipe[gitlab-ci]",
+  "recipe[nginx::server]",
   "recipe[gitlab]"
 ]}

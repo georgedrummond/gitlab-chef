@@ -1,6 +1,3 @@
-include_recipe 'postgresql::pg_user'
-include_recipe 'postgresql::pg_database'
-
 # Create git user
 
 user 'git' do
@@ -137,10 +134,3 @@ end
 link '/etc/nginx/sites-enabled/gitlab' do
   to '/etc/nginx/sites-available/gitlab'
 end
-
-include_recipe "nginx"
-
-nginx_site 'gitlab' do
-  enable true
-end
-
