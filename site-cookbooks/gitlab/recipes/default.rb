@@ -136,7 +136,6 @@ end
 
 link '/etc/nginx/sites-enabled/gitlab' do
   to '/etc/nginx/sites-available/gitlab'
-  #notifies :restart, "service[gitlab]", :delayed
 end
 
 include_recipe "nginx"

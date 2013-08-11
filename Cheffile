@@ -1,4 +1,4 @@
 site "http://community.opscode.com/api/v1"
 
-cookbook 'nginx'
+cookbook 'nginx', github: 'gchef/nginx-cookbook'
 cookbook 'postgresql', github: 'phlipper/chef-postgresql'

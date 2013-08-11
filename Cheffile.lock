@@ -4,17 +4,15 @@ SITE
     apt (2.0.0)
     build-essential (1.4.0)
     dpkg_autostart (0.1.2)
-    nginx (1.7.0)
+
+GIT
+  remote: https://github.com/gchef/nginx-cookbook
+  ref: master
+  sha: 462b99a3db3e29ac6a589d7a52363f62585eb153
+  specs:
+    nginx (2.9.0)
       apt (>= 0.0.0)
       build-essential (>= 0.0.0)
-      ohai (>= 1.1.4)
-      runit (>= 0.0.0)
-      yum (>= 0.0.0)
-    ohai (1.1.10)
-    runit (1.1.6)
-      build-essential (>= 0.0.0)
-      yum (>= 0.0.0)
-    yum (2.3.0)
 
 GIT
   remote: https://github.com/phlipper/chef-postgresql

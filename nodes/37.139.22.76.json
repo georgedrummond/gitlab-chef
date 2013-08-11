@@ -1,6 +1,6 @@
 {"run_list":[
-  "recipe[apt-update]",
-  "recipe[nginx]",
+  "recipe[system-update]",
+  "recipe[nginx::source]",
   "recipe[postgresql::server]",
   "recipe[postgresql::client]",
   "recipe[postgresql::server_dev]",
